@@ -1,23 +1,27 @@
 from rest_framework import serializers
-
 from profiles.models import UserProfile
 
 
 class ProfileSerializer(serializers.ModelSerializer):
-    username = serializers.CharField(source='user.username')
-    user_id = serializers.CharField(source='user.pk')
-    profile_id = serializers.CharField(source='user.profile.pk')
-    profile_image = serializers.ImageField(read_only=True)
+    username = serializers.CharField(source='user.username', read_only=True)
+    # user = UserSerializer(read_only=True)
+    user_id = serializers.CharField(source='user.pk', read_only=True)
+    # profile_id = serializers.IntegerField(source='user.profile.pk', required=False)
+    # profile_id = serializers.IntegerField()
+    profile_id = serializers.SerializerMethodField()
+    profile_image = serializers.ImageField(max_length=None, use_url=True, read_only=False)
 
     class Meta:
         model = UserProfile
         fields = [
-            'username',
             'user_id',
+            'username',
             'profile_id',
             'profile_image',
             'created_at',
             'updated_at',
         ]
 
-        # read_only_fields = ('userid', 'profileid')
+    def get_profile_id(self, obj):
+        # print("DEBUG: profile id", obj.profile.pk)
+        return obj.pk

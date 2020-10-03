@@ -9,16 +9,16 @@ from rest_framework import views
 from rest_framework.utils import json
 
 from accounts.models import User
-from .serializers import UserRegistrationSerializer, LoginSerializer, UserSerializer
+from .serializers import LoginSerializer, UserSerializer
 
 
+# To create a new user with a password , create method defined in UserSerializer
 class RegisterAPIView(CreateAPIView):
     queryset = User.objects.all()
-    serializer_class = UserRegistrationSerializer
+    serializer_class = UserSerializer
     permission_classes = []
 
     # permission_classes = [permissions.AllowAny]
-    # We need to work on the request on serializers.py so we send request context to serializers with this method
 
     def get_serializer_context(self):
         return {'request': self.request}
@@ -37,19 +37,15 @@ class LoginAPIView(views.APIView):
         data = request.data
         serializer = self.serializer_class(data=data)
         serializer.is_valid(raise_exception=True)
-        # print("DEBUG: ", serializer.validated_data.pk)
-        # print("DEBUG: data", serializer.data['email'])
         userid = serializer.validated_data.pk
         email = serializer.data['email']
         username = serializer.data['username']
         token = serializer.data['token']
-        # print(type(token))
-
-        # This is fetched from user side with using related name (which we created in UserProfile model)
+        host = request.get_host()
+        # This is fetched from user model side with using related name (which we created in UserProfile model)
         profile_id = serializer.validated_data.profile.pk
         try:
             profile_image = serializer.validated_data.profile.profile_image.url
-            # profile_image = serializer.validated_data.profile.get_image_uri()
         except:
             profile_image = None
 
@@ -58,48 +54,52 @@ class LoginAPIView(views.APIView):
             "email": email,
             'username': username,
             'profile_id': profile_id,
-            'profile_image': profile_image,
+            'profile_image': host + profile_image,
             'token': token
 
         }, status=status.HTTP_200_OK)
 
 
-class UserRetrieveAPIView(RetrieveAPIView):
-    permission_classes = [IsAuthenticated]
-    # authentication_classes = []
-    # permission_classes = []
+class UserRetrieveUpdateAPIView(RetrieveUpdateAPIView):
+    # permission_classes = [IsAuthenticated]
+    authentication_classes = []
+    permission_classes = []
     # renderer_classes = (UserJSONRenderer)
     serializer_class = UserSerializer
+    queryset = User.objects.all()
+    lookup_field = 'username'
 
-    # queryset = User.objects.all()
+    def get_serializer_context(self):
+        return {'request': self.request}
 
-    def retrieve(self, request, *args, **kwargs):
-        # There is nothing to validate or save here. Instead, we just want the
-        # serializer to handle turning our `User` object into something that
-        # can be JSON field and sent to the client.
-        serializer = self.serializer_class(request.user)
-
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-
-class UserUpdateAPIView(UpdateAPIView):
-    permission_classes = [IsAuthenticated]
-    # authentication_classes = []
-    # permission_classes = []
-    # renderer_classes = (UserJSONRenderer)
-    serializer_class = UserSerializer
-
-    def update(self, request, *args, **kwargs):
-        # serializer_data = request.data.get('user', {})
-        serializer_data = request.data
-
-        # Here is that serialize, validate, save pattern we talked about
-        # before.
-        serializer = self.serializer_class(
-            request.user, data=serializer_data, partial=True
-        )
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-
-        # return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response({"message": "User Updated Successfully"}, status=status.HTTP_200_OK)
+    # def retrieve(self, request, *args, **kwargs):
+    #     # There is nothing to validate or save here. Instead, we just want the
+    #     # serializer to handle turning our `User` object into something that
+    #     # can be JSON field and sent to the client.
+    #     serializer = self.serializer_class(request.user)
+    #
+    #     return Response(serializer.data, status=status.HTTP_200_OK)
+    #
+    # def update(self, request, *args, **kwargs):
+    #     # serializer_data = request.data.get('user', {})
+    #     # serializer_data = request.data
+    #
+    #     user_data = request.data.get('user', {})
+    #
+    #     serializer_data = {
+    #         'username': user_data.get('username', request.user.username),
+    #         'email': user_data.get('username', request.user.email),
+    #         'profile':{
+    #             'profile_image': user_data.get('profile_image',request.user.profile.profile_image)
+    #         }
+    #     }
+    #     # Here is that serialize, validate, save pattern we talked about
+    #     # before.
+    #     serializer = self.serializer_class(
+    #         request.user, data=serializer_data, partial=True
+    #     )
+    #     serializer.is_valid(raise_exception=True)
+    #     serializer.save()
+    #
+    #     # return Response(serializer.data, status=status.HTTP_200_OK)
+    #     return Response({"message": "User Updated Successfully"}, status=status.HTTP_200_OK)
