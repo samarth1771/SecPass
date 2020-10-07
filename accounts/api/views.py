@@ -9,7 +9,7 @@ from rest_framework import views
 from rest_framework.utils import json
 
 from accounts.models import User
-from .serializers import LoginSerializer, UserSerializer
+from .serializers import LoginSerializer, UserSerializer, ChangePasswordSerializer
 
 
 # To create a new user with a password , create method defined in UserSerializer
@@ -22,6 +22,17 @@ class RegisterAPIView(CreateAPIView):
 
     def get_serializer_context(self):
         return {'request': self.request}
+
+    def post(self, request, *args, **kwargs):
+        serializer = UserSerializer(data=request.data, context={'request': self.request})
+        # print("Request DATA", self.request)
+        if serializer.is_valid():
+            user = serializer.save()
+            # print("Serializer DATA", serializer.data)
+            if user:
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_409_CONFLICT)
 
 
 class LoginAPIView(views.APIView):
@@ -39,7 +50,7 @@ class LoginAPIView(views.APIView):
         serializer.is_valid(raise_exception=True)
         userid = serializer.validated_data.pk
         email = serializer.data['email']
-        username = serializer.data['username']
+        # username = serializer.data['username']
         token = serializer.data['token']
         host = request.get_host()
         # This is fetched from user model side with using related name (which we created in UserProfile model)
@@ -52,7 +63,7 @@ class LoginAPIView(views.APIView):
         return Response(data={
             "userid": userid,
             "email": email,
-            'username': username,
+            # 'username': username,
             'profile_id': profile_id,
             'profile_image': host + profile_image,
             'token': token
@@ -67,7 +78,7 @@ class UserRetrieveUpdateAPIView(RetrieveUpdateAPIView):
     # renderer_classes = (UserJSONRenderer)
     serializer_class = UserSerializer
     queryset = User.objects.all()
-    lookup_field = 'username'
+    lookup_field = 'id'
 
     def get_serializer_context(self):
         return {'request': self.request}
@@ -103,3 +114,38 @@ class UserRetrieveUpdateAPIView(RetrieveUpdateAPIView):
     #
     #     # return Response(serializer.data, status=status.HTTP_200_OK)
     #     return Response({"message": "User Updated Successfully"}, status=status.HTTP_200_OK)
+
+
+class ChangePasswordView(UpdateAPIView):
+    """
+    An endpoint for changing password.
+    """
+    serializer_class = ChangePasswordSerializer
+    model = User
+    permission_classes = (IsAuthenticated,)
+
+    def get_object(self, queryset=None):
+        obj = self.request.user
+        return obj
+
+    def update(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        serializer = self.get_serializer(data=request.data)
+
+        if serializer.is_valid():
+            # Check old password
+            if not self.object.check_password(serializer.data.get("old_password")):
+                return Response({"old_password": ["Wrong password."]}, status=status.HTTP_400_BAD_REQUEST)
+            # set_password also hashes the password that the user will get
+            self.object.set_password(serializer.data.get("new_password"))
+            self.object.save()
+            response = {
+                'status': 'success',
+                'code': status.HTTP_200_OK,
+                'message': 'Password updated successfully',
+                'data': []
+            }
+
+            return Response(response)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
