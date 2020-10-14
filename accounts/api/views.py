@@ -8,6 +8,7 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework import views
 from rest_framework.utils import json
 
+from accounts.api.exceptions import CustomValidation
 from accounts.models import User
 from .serializers import LoginSerializer, UserSerializer, ChangePasswordSerializer
 
@@ -25,8 +26,19 @@ class RegisterAPIView(CreateAPIView):
 
     def post(self, request, *args, **kwargs):
         serializer = UserSerializer(data=request.data, context={'request': self.request})
-        # print("Request DATA", self.request)
-        if serializer.is_valid():
+        # print("Request DATA", self.request.data.get('email'))
+        email = self.request.data.get('email')
+        password = self.request.data.get('password')
+
+        if email is "" or None:
+            raise CustomValidation('Please enter email to register.', 'message',
+                                   status_code=status.HTTP_400_BAD_REQUEST)
+
+        if password is "" or None:
+            raise CustomValidation('Please enter password to register.', 'message',
+                                   status_code=status.HTTP_400_BAD_REQUEST)
+
+        if serializer.is_valid(raise_exception=True):
             user = serializer.save()
             # print("Serializer DATA", serializer.data)
             if user:

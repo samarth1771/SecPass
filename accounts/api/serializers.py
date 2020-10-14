@@ -85,9 +85,27 @@ class UserSerializer(serializers.ModelSerializer):
 
         read_only_fields = ['token', 'profile_id', 'profile_image', 'user_id', ]
 
+    def validate(self, data):
+        email = data.get('email', None)
+        password = data.get('password', None)
+        # username = data.get('username', None)
+        # user_object = User.objects.filter(email=email)
+        # print("DEBUGGGGG", user_object)
+        if User.objects.filter(email=email).exists():
+            raise CustomValidation('User with this email already exists.', 'message',
+                                   status_code=status.HTTP_400_BAD_REQUEST)
+        if email is None:
+            raise CustomValidation('Please enter email to register.', 'message', status_code=status.HTTP_400_BAD_REQUEST)
+        if password is None:
+            raise CustomValidation('Please enter password to register.', 'message', status_code=status.HTTP_400_BAD_REQUEST)
+
+        return data
+
     def create(self, validated_data):
         # profile_data = validated_data.pop('profile')
         password = validated_data.pop('password')
+        # email = validated_data.get('email', None)
+
         user = User(**validated_data)
         user.set_password(password)
         user.save()
