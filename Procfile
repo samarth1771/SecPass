@@ -1,0 +1,1 @@
+web: gunicorn SecPass.wsgi --log-file -
