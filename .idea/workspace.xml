@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="6695848e-3367-403c-b22c-06ce42a9c588" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1l0jOQu3U2SJFE5a56dOcNZ7AGC" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Samarth\Desktop\The Seven\Projects\SecPass" />
+      <recent name="C:\Users\Samarth\Desktop\The Seven\Projects\SecPass\media" />
+      <recent name="C:\Users\Samarth\Desktop\The Seven\Projects\SecPass\static" />
+      <recent name="C:\Users\Samarth\Desktop\The Seven\Projects\SecPass\profiles\api" />
+      <recent name="C:\Users\Samarth\Desktop\The Seven\Projects\SecPass\accounts\api" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="6695848e-3367-403c-b22c-06ce42a9c588" name="Default Changelist" comment="" />
+      <created>1601629623763</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1601629623763</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Second Commit">
+      <created>1601708438938</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1601708438938</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Second Commit">
+      <created>1601711601871</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1601711601871</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Second Commit">
+      <created>1601711833532</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1601711833532</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Changed the status codes">
+      <created>1602055606201</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1602055606201</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Changes blank field error message in Login and Register.">
+      <created>1602656758281</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1602656758281</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Changed settings for Heroku">
+      <created>1606744348702</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1606744348702</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Second Commit" />
+    <MESSAGE value="Changed the status codes" />
+    <MESSAGE value="Changes blank field error message in Login and Register." />
+    <MESSAGE value="Changed settings for Heroku" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changed settings for Heroku" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="299" y="0" key="CommitChangelistDialog2" timestamp="1606744347393">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="299" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1606744347393" />
+    <state x="275" y="96" key="Vcs.Push.Dialog.v2" timestamp="1606744350819">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="275" y="96" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1606744350819" />
+    <state x="500" y="277" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1606744329841">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="500" y="277" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.728@0.0.1366.728" timestamp="1606744329841" />
+  </component>
+</project>
